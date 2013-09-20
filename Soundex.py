@@ -12,9 +12,12 @@ def soundex(aString):
     >>> soundex('M')
     'M000'
     
+    Even vowel should
+    >>> soundex('A')
+    'A000'
     
 """
-    return 'M000'
+    return aString + '000'
     
 
 if __name__ == "__main__":
