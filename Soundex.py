@@ -75,6 +75,21 @@ def soundex(aString):
     >>> soundex('RWRHRWR')
     'R000'
     
+    If first letter is a vowel, do not strip the first consonant
+    >>> soundex('AS')
+    'A200'
+    
+    Using this algorithm, both "Robert" and "Rupert" return the same string "R163" while 
+    "Rubin" yields "R150". "Ashcraft" and "Ashcroft" both yield "A261" and not "A226" 
+    (the chars 's' and 'c' in the name would receive a single number of 2 and not 22 
+    since an 'h' lies in between them). "Tymczak" yields "T522" not "T520" (the chars 'z' 
+    and 'k' in the name are coded as 2 twice since a vowel lies in between them). 
+    "Pfister" yields "P236" not "P123" (the first two letters have the same number and
+    are coded once as 'P').
+    >>> soundex('Robert'), soundex('Rupert')
+    ('R163', 'R163')
+    >>> soundex('Ashcraft'), soundex('Ashcroft')
+    ('A261', 'A261')
     
 """
 
@@ -94,12 +109,12 @@ def soundex(aString):
     firstLetter = aString[:1]  # first character is dealt with specially
     coded = [letterValues[c] for c in list(aString) if letterValues[c] != "delete"]
     
-    prev = ''
+    prev = None
     duplicate_free = []
     for x in coded:
         if x != prev:
             prev = x
-            duplicate_free += x
+            duplicate_free += [x]
             
     coded = duplicate_free[1:]
     
