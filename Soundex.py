@@ -90,6 +90,10 @@ def soundex(aString):
     ('R163', 'R163')
     >>> soundex('Ashcraft'), soundex('Ashcroft')
     ('A261', 'A261')
+    >>> soundex('Tymczak')
+    'T522'
+    >>> soundex('Pfister')
+    'P236'
     
 """
 
