@@ -113,13 +113,7 @@ def soundex(aString):
     firstLetter = aString[:1]  # first character is dealt with specially
     coded = [letterValues[c] for c in list(aString) if letterValues[c] != "delete"]
     
-    prev = None
-    duplicate_free = []
-    for x in coded:
-        if x != prev:
-            prev = x
-            duplicate_free += [x]
-            
+    duplicate_free = [a for (a,b) in zip(coded, [None] + coded) if a != b]
     coded = duplicate_free[1:]
     
     return firstLetter + ''.join(coded + list('000'))[:3]
