@@ -54,6 +54,10 @@ def soundex(aString):
     >>> soundex('cr')
     'C600'
     
+    Drop: a, e, i, o, u, y, h, w
+    >>> soundex('caeiouyhwr')
+    'C600'
+    
 """
 
     letterValues = defaultdict(lambda: "", 
