@@ -57,7 +57,14 @@ def soundex(aString):
     Drop: a, e, i, o, u, y, h, w
     >>> soundex('caeiouyhwr')
     'C600'
+
+    Two letters with same code separated by a vowel should be coded separately
+    >>> soundex('FOOFOOFOOF')
+    'F111'
     
+    Repeated consonants with same value should only be coded as one value
+    >>> soundex('ZAPF')
+    'Z100'
 """
 
     letterValues = defaultdict(lambda: "", 
@@ -76,6 +83,16 @@ def soundex(aString):
     head = aString[:1]  # first character is dealt with specially
     tail = aString[1:]
     coded = [letterValues[c] for c in list(tail)]
+    
+    prev = ''
+    duplicate_free = []
+    for x in coded:
+        if x != prev:
+            prev = x
+            duplicate_free += x
+            
+    coded = duplicate_free
+    
     return head + ''.join(coded + list('000'))[:3]
     
 
