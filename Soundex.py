@@ -65,6 +65,11 @@ def soundex(aString):
     Repeated consonants with same value should only be coded as one value
     >>> soundex('ZAPF')
     'Z100'
+    
+    If first consonant is repeated, it should still be only coded as one value (i.e. as the first letter)
+    >>> soundex('FFOOOOFF')
+    'F100'
+    
 """
 
     letterValues = defaultdict(lambda: "", 
@@ -80,9 +85,8 @@ def soundex(aString):
                                 })
     
     aString = aString.upper()
-    head = aString[:1]  # first character is dealt with specially
-    tail = aString[1:]
-    coded = [letterValues[c] for c in list(tail)]
+    firstLetter = aString[:1]  # first character is dealt with specially
+    coded = [letterValues[c] for c in list(aString)]
     
     prev = ''
     duplicate_free = []
@@ -91,9 +95,9 @@ def soundex(aString):
             prev = x
             duplicate_free += x
             
-    coded = duplicate_free
+    coded = duplicate_free[1:]
     
-    return head + ''.join(coded + list('000'))[:3]
+    return firstLetter + ''.join(coded + list('000'))[:3]
     
 
 if __name__ == "__main__":
