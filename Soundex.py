@@ -12,12 +12,16 @@ def soundex(aString):
     >>> soundex('M')
     'M000'
     
-    Even vowel should
+    Even vowel should be shown at start of the string
     >>> soundex('A')
     'A000'
+
+    Vowels except first one should be dropped
+    >>> soundex('KAAAA')
+    'K000'
     
 """
-    return aString + '000'
+    return aString[:1] + '000'
     
 
 if __name__ == "__main__":
