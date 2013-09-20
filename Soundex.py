@@ -20,8 +20,16 @@ def soundex(aString):
     >>> soundex('KAAAA')
     'K000'
     
+    Two consonants in different groups should be mapped to first letter + 1 number + two zeroes
+    >>> soundex('RB'), soundex('RF'), soundex('RP'), soundex('RV')
+    ('R100', 'R100', 'R100', 'R100')
+    
+    
 """
-    return aString[:1] + '000'
+    letterValues = {'A': '',
+                    'B': '1', 'P': '1', 'F': '1', 'V': '1'}
+    coded = [letterValues[c] for c in list(aString[1:])] + list('000')
+    return aString[:1] + ''.join(coded)[:3]
     
 
 if __name__ == "__main__":
