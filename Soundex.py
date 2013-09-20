@@ -66,14 +66,20 @@ def soundex(aString):
     >>> soundex('ZAPF')
     'Z100'
     
-    If first consonant is repeated, it should still be only coded as one value (i.e. as the first letter)
+    Repeated consonant rule also applies to the first letter
     >>> soundex('FFOOOOFF')
     'F100'
+    
+    Two letters with the same number separated by 'h' or 'w' are coded as a single number, 
+    whereas such letters separated by a vowel are coded twice.
+    >>> soundex('RWRHRWR')
+    'R000'
+    
     
 """
 
     letterValues = defaultdict(lambda: "", 
-                               {'A': '',
+                               {'H': "delete", "W": "delete",
                                 'B': '1', 'P': '1', 'F': '1', 'V': '1',
                                 'C': '2', 'G': '2', 'J': '2', 'K': '2',
                                 'Q': '2', 'S': '2', 'X': '2', 'Z': '2',
@@ -86,7 +92,7 @@ def soundex(aString):
     
     aString = aString.upper()
     firstLetter = aString[:1]  # first character is dealt with specially
-    coded = [letterValues[c] for c in list(aString)]
+    coded = [letterValues[c] for c in list(aString) if letterValues[c] != "delete"]
     
     prev = ''
     duplicate_free = []
