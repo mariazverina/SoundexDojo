@@ -45,6 +45,11 @@ def soundex(aString):
     Convert: l => 4
     >>> soundex('cl')
     'C400'
+    
+    Convert: m, n => 5
+    >>> soundex('fm'), soundex('fn')
+    ('F500', 'F500')
+
 """
 
     letterValues = defaultdict(lambda: "", 
@@ -54,6 +59,7 @@ def soundex(aString):
                                 'Q': '2', 'S': '2', 'X': '2', 'Z': '2',
                                 'D': '3', 'T': '3',
                                 'L': '4',
+                                'M': '5', 'N': '5',
                                 
                                 })
     
