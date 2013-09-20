@@ -42,6 +42,9 @@ def soundex(aString):
     >>> soundex('fd'), soundex('ft')
     ('F300', 'F300')
     
+    Convert: l => 4
+    >>> soundex('cl')
+    'C400'
 """
 
     letterValues = defaultdict(lambda: "", 
@@ -50,6 +53,8 @@ def soundex(aString):
                                 'C': '2', 'G': '2', 'J': '2', 'K': '2',
                                 'Q': '2', 'S': '2', 'X': '2', 'Z': '2',
                                 'D': '3', 'T': '3',
+                                'L': '4',
+                                
                                 })
     
     aString = aString.upper()
