@@ -99,6 +99,7 @@ def soundex(aString):
 
     letterValues = defaultdict(lambda: "", 
                                {'H': "delete", "W": "delete",
+                                # vowels are encoded as empty strings by the power of defaultdict
                                 'B': '1', 'P': '1', 'F': '1', 'V': '1',
                                 'C': '2', 'G': '2', 'J': '2', 'K': '2',
                                 'Q': '2', 'S': '2', 'X': '2', 'Z': '2',
@@ -109,14 +110,13 @@ def soundex(aString):
                                 
                                 })
     
-    aString = aString.upper()
-    firstLetter = aString[:1]  # first character is dealt with specially
-    coded = [letterValues[c] for c in list(aString) if letterValues[c] != "delete"]
+    aString = aString.upper()                                                       # strings must be upper case
+    coded = [letterValues[c] for c in list(aString) if letterValues[c] != "delete"] # encode values & strip H/W
     
-    duplicate_free = [a for (a,b) in zip(coded, [None] + coded) if a != b]
-    coded = duplicate_free[1:]
+    duplicate_free = [a for (a,b) in zip(coded, [None] + coded) if a != b]          # drop duplicate values
+    coded = [aString[:1]] + duplicate_free[1:] + list("000")                        # don't encode first character and pad with zeros
     
-    return firstLetter + ''.join(coded + list('000'))[:3]
+    return ''.join(coded)[:4]                                                       # trim to 4 chars
     
 
 if __name__ == "__main__":
