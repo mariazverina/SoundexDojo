@@ -5,6 +5,7 @@ Created on 20 Sep 2013
 @author: mariaz
 '''
 from collections import defaultdict
+import timeit
 
 def soundex(aString):
     """Return the soundex value of a string. This is 4 character string with one alpha and 3 digits.
@@ -94,7 +95,13 @@ def soundex(aString):
     'T522'
     >>> soundex('Pfister')
     'P236'
-    
+
+    Careful not to strip off the first consonant when H/W disappear
+    >>> soundex('wryly')
+    'W640'
+    >>> soundex('hry')
+    'H600'
+
 """
 
     letterValues = defaultdict(lambda: "", 
@@ -114,8 +121,10 @@ def soundex(aString):
     coded = [letterValues[c] for c in list(aString) if letterValues[c] != "delete"] # encode values & strip H/W
     
     duplicate_free = [a for (a,b) in zip(coded, [None] + coded) if a != b]          # drop duplicate values
-    coded = [aString[:1]] + duplicate_free[1:] + list("000")                        # don't encode first character and pad with zeros
-    
+    coded = [aString[:1]] + duplicate_free + list("000")                            # don't encode first character and pad with zeros
+    if letterValues[coded[0]] == coded[1]:
+        del coded[1]
+
     return ''.join(coded)[:4]                                                       # trim to 4 chars
     
 
